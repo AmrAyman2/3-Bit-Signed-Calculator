@@ -6,7 +6,7 @@ module full_adder(
     output sum
 );
 
-   assign sum = a^b^cin;
-   assign cout = (a&b) | (a&cin) | (b&cin);
+   assign sum = (a ^ b) ^ cin;
+   assign cout = (a & b) | (a & cin) | (b & cin);
 
 endmodule
