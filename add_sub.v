@@ -2,9 +2,10 @@ module add_sub(
     input [2:0] a,   // 1 bit for sign, other 2 are the value
     input [2:0] b,   // 1 bit for sign, other 2 are the value
     input s,                // control variable, 0 for addition, 1 for subtraction
-    output [3:0] c,     // 1 bit for sign, other 3 are the value
-    output [2:0] cout  //carry out
+    output [4:0] c     // 1 bit for sign, other 3 are the value
 );
+
+wire [2:0] cout;
 
 wire [2:0] a_comp;
 wire [2:0] b_comp;
@@ -50,5 +51,6 @@ assign c_temp[3]= ((cout[2] ^ cout[1]) ^ c_temp[2]);
 assign c[0] = c_temp[0];
 assign c[1] = c_temp[1] ^ (c_temp[3] & c_temp[0]);
 assign c[2] = (c_temp[3] ^ c_temp[2]) | (c_temp[2] & ~c_temp[1] & ~c_temp[0]);
-assign c[3] = c_temp[3];
+assign c[3] = 0;
+assign c[4] = c_temp[3];
 endmodule

@@ -5,19 +5,17 @@ module add_sub_tb;
     reg signed [2:0] b;
     reg s;
     // outputs
-    wire signed [3:0] c;
+    wire signed [4:0] c;
     wire [2:0] cout;
 
     add_sub DUT (
         .a(a),
         .b(b),
         .s(s),
-        .c(c),
-        .cout(cout)
-        
+        .c(c)
     );
-    reg [3:0] expected;
-    reg[1:0] a_magnitude,b_magnitude;
+
+    reg [4:0] expected;
     integer i, j;
     initial begin
         // iterate on all possible combinations
@@ -27,31 +25,31 @@ module add_sub_tb;
                 b = j;
                 s = 1'b0;
                 if(a[2]==0 & b[2]==0) begin
-                    expected[2:0]=a[1:0]+b[1:0];
-                    expected[3]=0;
+                    expected[3:0]=a[1:0]+b[1:0];
+                    expected[4]=0;
                 end
                 if(a[2]==1 & b[2]==1) begin
-                    expected[2:0]=a[1:0] + b[1:0];
-                    expected[3]=1;
+                    expected[3:0]=a[1:0] + b[1:0];
+                    expected[4]=1;
                 end
                 if(a[2]==1 & b[2]==0 & a[1:0]>b[1:0]) begin
-                expected[2:0]=a[1:0]-b[1:0];
-                expected[3]=1;
+                expected[3:0]=a[1:0]-b[1:0];
+                expected[4]=1;
                 end
                 if(a[2]==1 & b[2]==0 & a[1:0]<b[1:0]) begin
-                expected[2:0]=b[1:0]-a[1:0];
-                expected[3]=0;
+                expected[3:0]=b[1:0]-a[1:0];
+                expected[4]=0;
                 end
                 if(a[2]==0 & b[2]==1 & a[1:0]<b[1:0]) begin
-                expected[2:0]=b[1:0]-a[1:0];
-                expected[3]=1;
+                expected[3:0]=b[1:0]-a[1:0];
+                expected[4]=1;
                 end
                 if(a[2]==0 & b[2]==1 & a[1:0]>b[1:0]) begin
-                expected[2:0]=a[1:0]-b[1:0];
-                expected[3]=0;
+                expected[3:0]=a[1:0]-b[1:0];
+                expected[4]=0;
                 end
                 if(a[2] != b[2] & a[1:0]==b[1:0])
-                expected=4'b0000;
+                expected=5'b00000;
 
                 #100;
 
@@ -64,31 +62,31 @@ module add_sub_tb;
                 b = j;
                 s = 1'b1;
                 if(a[2]==0 & b[2]==0 & a[1:0]>b[1:0]) begin
-                    expected[2:0]=a[1:0]-b[1:0];
-                    expected[3]=0;
+                    expected[3:0]=a[1:0]-b[1:0];
+                    expected[4]=0;
                 end
                 if(a[2]==0 & b[2]==0 & a[1:0]<b[1:0]) begin
-                    expected[2:0]=b[1:0]-a[1:0];
-                    expected[3]=s;
+                    expected[3:0]=b[1:0]-a[1:0];
+                    expected[4]=s;
                 end
                 if(a[2]==1 & b[2]==0) begin
-                expected[2:0]=a[1:0]+b[1:0];
-                expected[3]=1;
+                expected[3:0]=a[1:0]+b[1:0];
+                expected[4]=1;
                 end
                 if(a[2]==0 & b[2]==1) begin
-                expected[2:0]=a[1:0]+b[1:0];
-                expected[3]=0;
+                expected[3:0]=a[1:0]+b[1:0];
+                expected[4]=0;
                 end
                 if(a[2]==1 & b[2]==1 & a[1:0]>b[1:0]) begin
-                expected[2:0]=a[1:0]-b[1:0];
-                expected[3]=1;
+                expected[3:0]=a[1:0]-b[1:0];
+                expected[4]=1;
                 end
                 if(a[2]==1 & b[2]==1 & a[1:0]<b[1:0]) begin
-                expected[2:0]=b[1:0]-a[1:0];
-                expected[3]=0;
+                expected[3:0]=b[1:0]-a[1:0];
+                expected[4]=0;
                 end
                 if(a[2]==b[2] & b[1:0]==a[1:0]) begin
-                expected=4'b0000;
+                expected=5'b00000;
                 end
                 #100;
 

@@ -1,9 +1,9 @@
 module mul_tb;
 
-    // Inputs
+    // inputs
     reg signed [2:0] a, b;
 
-    // Outputs
+    // outputs
     wire signed [4:0] product;
 
     mul UUT (
@@ -22,9 +22,8 @@ integer i, j;
                 b[2:0] = j;
                 expected[3:0] = a[1:0] * b[1:0];
                 expected[4] = (a[2] ^ b[2]) & ((a[0] | a[1]) & (b[1] | b[0]));
-                #100;  // Wait for the output to stabilize
+                #100;
 
-                // Print the inputs and the output
                 if(product==expected) begin
                 $display("success a = %b, b = %b, product = %b", a, b, product);
                 end
@@ -33,7 +32,6 @@ integer i, j;
                 end
         end
         end
-        // Finish the simulation
         $finish;
     end
       
