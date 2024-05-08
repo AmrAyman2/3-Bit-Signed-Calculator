@@ -14,6 +14,7 @@ rem DUT(
 );
 
 reg[4:0] expected;
+reg divexpected;
 integer i, j;
     initial begin
         // Iterate over all possible combinations of 3-bit inputs
@@ -21,8 +22,11 @@ integer i, j;
             for (j = -3; j < 4; j = j + 1) begin
                 a[2:0] = i;
                 b[2:0] = j;
-                if(b==3'b000)
+                divexpected=0;
+                if(b==3'b000) begin
                 expected=0;
+                divexpected=1;
+                end
                 else if(b==3'b101 || b==3'b001)
                 expected=5'b00000;
                 else if(a[1:0]==b[1:0])
@@ -33,7 +37,7 @@ integer i, j;
                 end
                 #100;
 
-                if(rem==expected) begin
+                if(rem==expected && divbyzeroflag==divexpected) begin
                 $display("success a = %b, b = %b, remainder = %b", a, b, rem);
                 end
                 else begin

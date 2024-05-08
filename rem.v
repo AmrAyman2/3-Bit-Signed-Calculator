@@ -16,6 +16,7 @@ assign rem[1]=x2 & y2;
 assign rem[2]=0;
 assign rem[3]=0;
 assign rem[4] = a[2] & (rem[1] | rem[0]);
+assign divbyzeroflag= ~(b[0] | b[1]);
 
 
 endmodule
