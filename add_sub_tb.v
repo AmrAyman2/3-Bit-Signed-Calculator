@@ -16,8 +16,10 @@ module add_sub_tb;
     );
 
     reg [4:0] expected;
-    integer i, j;
+    integer i, j,n;
+
     initial begin
+    n = $fopen("addsub.txt","w");
         // iterate on all possible combinations
         for (i = -3; i < 4; i = i + 1) begin
             for (j = -3; j < 4; j = j + 1) begin
@@ -53,11 +55,13 @@ module add_sub_tb;
 
                 #100;
 
-                if (c == expected)
-                    $display("Success a=%b, b=%b, s=%b, c=%b", a, b, s, c);
-                else
-                    $display("Fail a=%b, b=%b, s=%b, c=%b, expected=%b", a, b, s, c, expected);
-
+                if (c == expected) begin
+                    $display("Success a=%b, b=%b, s=%b, sum=%b", a, b, s, c);
+                    $fwrite(n,"%b + %b = %b \n",a,b,c);
+                end
+                else begin
+                    $display("Fail a=%b, b=%b, s=%b, sum=%b, expected=%b", a, b, s, c, expected);
+                end
                 a = i;
                 b = j;
                 s = 1'b1;
@@ -90,12 +94,15 @@ module add_sub_tb;
                 end
                 #100;
 
-                if (c == (expected))
-                    $display("Success a=%b, b=%b, s=%b, c=%b", a, b, s, c);
+                if (c == (expected)) begin
+                    $display("Success a=%b, b=%b, s=%b, difference=%b", a, b, s, c);
+                    $fwrite(n,"%b - %b = %b \n",a,b,c);
+                end
                 else
-                    $display("Fail a=%b, b=%b, s=%b, c=%b, expected=%b", a, b, s, c, expected);
+                    $display("Fail a=%b, b=%b, s=%b, difference=%b, expected=%b", a, b, s, c, expected);
             end
         end
+        $fclose(n);
         $finish;
     end
 

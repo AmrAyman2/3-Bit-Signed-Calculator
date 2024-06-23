@@ -13,8 +13,9 @@ module mul_tb;
     );
     reg [4:0] expected;
 
-integer i, j;
+integer i, j,n;
     initial begin
+    n = $fopen("mul.txt","w");
         // Iterate over all possible combinations of 3-bit inputs
         for (i = -3; i < 4; i = i + 1) begin
             for (j = -3; j < 4; j = j + 1) begin
@@ -26,12 +27,15 @@ integer i, j;
 
                 if(product==expected) begin
                 $display("success a = %b, b = %b, product = %b", a, b, product);
+                $fwrite(n,"%b * %b = %b \n",a,b,product);
+
                 end
                 else begin
                 $display("fail a = %b, b = %b, product = %b, expected =%b", a, b, product,expected);
                 end
         end
         end
+        $fclose(n);
         $finish;
     end
       

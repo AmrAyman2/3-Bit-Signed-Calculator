@@ -15,8 +15,9 @@ rem DUT(
 
 reg[4:0] expected;
 reg divexpected;
-integer i, j;
+integer i, j,n;
     initial begin
+        n = $fopen("rem.txt","w");
         // Iterate over all possible combinations of 3-bit inputs
         for (i = -3; i < 4; i = i + 1) begin
             for (j = -3; j < 4; j = j + 1) begin
@@ -38,13 +39,15 @@ integer i, j;
                 #100;
 
                 if(rem==expected && divbyzeroflag==divexpected) begin
-                $display("success a = %b, b = %b, remainder = %b", a, b, rem);
+                $display("success a = %b, b = %b, remainder = %b divbyzero=%b", a, b, rem,divbyzeroflag);
+                $fwrite(n,"%b mod %b = %b dividebyzero: %b \n",a,b,rem,divbyzeroflag);
                 end
                 else begin
                 $display("fail a = %b, b = %b, remainder = %b, expected =%b", a, b, rem,expected);
                 end
         end
         end
+        $fclose(n);
         $finish;
     end
 
